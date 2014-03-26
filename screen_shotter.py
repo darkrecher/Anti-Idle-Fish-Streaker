@@ -25,8 +25,10 @@ class ScreenShot(object):
             size_screenshot[0], size_screenshot[1],
             screen,
             coord_upleft[0], coord_upleft[1])
-        # FUTURE : je garde comme variable membre self.bmp ET self.mem.
-        #          Est-ce bien nécessaire ?
+        # FUTURE :
+        # Je garde comme variable membre self.bmp ET self.mem.
+        # J'ai besoin du self.bmp pour la fonction save. Mais Est-ce bien
+        # nécessaire ? On peut peut-être refaire un bmp à partir de self.mem.
 
     def save(self, path_file_save):
         self.bmp.SaveFile(path_file_save, wx.BITMAP_TYPE_PNG)
