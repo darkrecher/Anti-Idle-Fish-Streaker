@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from my_logging import debug, info
 
 import wx
+import colrtool
 
 # initialisation du  contexte
 app = wx.App(False)
@@ -32,3 +33,7 @@ class ScreenShot(object):
 
     def get_pixel_rgb(self, x_pix, y_pix):
         return self.mem.GetPixel(x_pix, y_pix)[0:3]
+
+    def get_pixel_hsv(self, x_pix, y_pix):
+        red, grn, blu = self.mem.GetPixel(x_pix, y_pix)[0:3]
+        return colrtool.hsv_from_rgb(red, grn, blu)
