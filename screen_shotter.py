@@ -36,11 +36,11 @@ class ScreenShot(object):
     def save(self, path_file_save):
         self.bmp.SaveFile(path_file_save, wx.BITMAP_TYPE_PNG)
 
-    def get_pixel_rgb(self, x_pix, y_pix):
-        return self.mem.GetPixel(x_pix, y_pix)[0:3]
+    def get_pixel_rgb(self, coord_pix):
+        return self.mem.GetPixel(coord_pix[0], coord_pix[1])[0:3]
 
-    def get_pixel_hsv(self, x_pix, y_pix):
-        red, grn, blu = self.mem.GetPixel(x_pix, y_pix)[0:3]
+    def get_pixel_hsv(self, coord_pix):
+        red, grn, blu = self.mem.GetPixel(coord_pix[0], coord_pix[1])[0:3]
         return hsv_from_rgb(red, grn, blu)
 
 
@@ -51,6 +51,6 @@ if __name__ == '__main__':
     screen_shot_mini = ScreenShot((50, 50), (200, 200))
     screen_shot_mini.save(DIR_SHOTS + "mini.png")
     screen_shot_big = ScreenShot()
-    debug("color : " + str(screen_shot_big.get_pixel_rgb(49, 49)))
-    debug("color : " + str(screen_shot_big.get_pixel_hsv(49, 49)))
+    debug("color : " + str(screen_shot_big.get_pixel_rgb((49, 49))))
+    debug("color : " + str(screen_shot_big.get_pixel_hsv((49, 49))))
     screen_shot_big.save(DIR_SHOTS + "big.png")
