@@ -2,9 +2,11 @@
 
 Un espèce de script pour faire des streaks au sous-jeu "Fishing", du jeu Flash "Anti-Idle", jouable sur Kongregate. (http://www.kongregate.com/games/Tukkun/anti-idle-the-game)
 
-Je sais pas du tout si ça va marcher. On va bien voir. 
+Et ça marche. Je confirme ! 
 
-Si ça marche, vous en serez les premiers informés.
+Pour l'instant, ça ne marche que quand le trait rouge de streak est affiché à l'écran. Donc au bout d'un certain nombre de streaks (dépendant de votre niveau de fishing), ça ne marche plus.
+
+Je règle ça très vite. À bientôt. 
 
 # Crédits #
 
