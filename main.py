@@ -18,11 +18,12 @@ DICT_DELAY_FROM_FISHING_STATE = {
     fst.WAIT_FISH : 0.1,
     fst.FISH_NEAR : 0.000001,
     fst.SEND_SIGNAL : 0.000001,
+    fst.CRITICAL_ZONE_NOT_FOUND : 0.1,
 }
 
 fish_line_info = fish_line_detector.detect()
 if fish_line_info is None:
-    raise SystemExit(1)
+    raise Exception("impossible de trouver la ligne de fishing à l'écran")
 
 fish_line_analyzer = FishLineAnalyzer(*fish_line_info)
 fst_prev = fst.HIGHLIGHTED

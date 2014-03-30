@@ -32,6 +32,11 @@ FISHING_STATE = enum(
 
     # Le triangle est pil poil sur la marque rouge. Il faut envoyer le signal.
     "SEND_SIGNAL",
+
+    # La zone critique (celle dans laquelle le triangle doit se trouver,
+    # lorsqu'on appuie sur une touche), n'a pas été trouvée à l'écran.
+    # Alors qu'on aurait dû. (Un triangle est présent)
+    "CRITICAL_ZONE_NOT_FOUND",
 )
 fst = FISHING_STATE
 
@@ -142,27 +147,36 @@ class FishLineAnalyzer(object):
             self.fst_cur = fst.WAIT_FISH
             return
 
-        if self.x_red_mark_defined is not None:
+        if self.x_red_mark_defined is None:
+            # TODO : problème. Le triangle est là, mais la marque rouge
+            # n'a pas été trouvée. C'est parce qu'on a atteint un streak
+            # assez haut, et la marque rouge n'est plus affichée à l'écran.
+            # Il faut faire une autre capture d'écran, quelques pixels
+            # en dessous, et repérér les pixels les plus cyan sur la ligne.
+            self.fst_cur = fst.CRITICAL_ZONE_NOT_FOUND
+            return
 
-            if (self.x_red_mark_defined == self.x_triangle
-                or self.x_red_mark_defined == self.x_triangle + 1):
+        # Arrivé ici, on est sur que x_red_mark_defined et x_triangle sont
+        # différents de None. Donc on peut faire des calculs avec.
+        if (self.x_red_mark_defined == self.x_triangle
+            or self.x_red_mark_defined == self.x_triangle - 1):
 
-                # On est dessus. Envoyez le signal ! (Sauf si déjà fait)
-                if self.fst_cur == fst.SEND_SIGNAL:
-                    self.fst_cur = fst.SIGNAL_SENT
-                else:
-                    self.fst_cur = fst.SEND_SIGNAL
-                return
-
+            # On est dessus. Envoyez le signal ! (Sauf si déjà fait)
+            if self.fst_cur == fst.SEND_SIGNAL:
+                self.fst_cur = fst.SIGNAL_SENT
             else:
+                self.fst_cur = fst.SEND_SIGNAL
+            return
 
-                # TODO : valeur de seuil complètement à l'arrache.
-                if abs(self.x_triangle - self.x_red_mark_defined) < 10:
-                    # Le triangle est proche. Faut rafraîchir souvent.
-                    self.fst_cur = fst.FISH_NEAR
-                else:
-                    # Le triangle est là, mais loin. Pas de quoi s'affoler.
-                    self.fst_cur = fst.WAIT_FISH
+        else:
+
+            # TODO : valeur de seuil complètement à l'arrache.
+            if abs(self.x_triangle - self.x_red_mark_defined) < 10:
+                # Le triangle est proche. Faut rafraîchir souvent.
+                self.fst_cur = fst.FISH_NEAR
+            else:
+                # Le triangle est là, mais loin. Pas de quoi s'affoler.
+                self.fst_cur = fst.WAIT_FISH
 
 
 
