@@ -7,6 +7,7 @@ from my_logging import debug, info
 import screen_shotter
 import fish_line_detector
 from fish_line_analyzer import FishLineAnalyzer, fst
+from fish_subline_analyzer import FishSublineAnalyzer
 from key_presser import KeyPresser
 
 debug("coucou éé")
@@ -25,9 +26,12 @@ fish_line_info = fish_line_detector.detect()
 if fish_line_info is None:
     raise Exception("impossible de trouver la ligne de fishing à l'écran")
 
-fish_line_analyzer = FishLineAnalyzer(*fish_line_info)
-fst_prev = fst.HIGHLIGHTED
+(y_line, x1_line, x2_line) = fish_line_info
+fish_subline_analyzer = FishSublineAnalyzer(y_line+5, x1_line, x2_line)
+fish_line_analyzer = FishLineAnalyzer(
+    y_line, x1_line, x2_line, fish_subline_analyzer)
 
+fst_prev = fst.HIGHLIGHTED
 key_presser = KeyPresser("Firefox", 100, "a")
 
 while True:

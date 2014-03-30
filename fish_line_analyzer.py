@@ -42,10 +42,11 @@ fst = FISHING_STATE
 
 class FishLineAnalyzer(object):
 
-    def __init__(self, y_line, x1_line, x2_line):
+    def __init__(self, y_line, x1_line, x2_line, fish_line_analyzer):
         self.y_line = y_line
         self.x1_line = x1_line
         self.x2_line = x2_line
+        self.fish_line_analyzer = fish_line_analyzer
         self.line_length = x2_line - x1_line + 1
 
         self.x_red_mark_1 = None
@@ -147,13 +148,18 @@ class FishLineAnalyzer(object):
             return
 
         if self.x_red_mark_defined is None:
-            # TODO : problème. Le triangle est là, mais la marque rouge
+            # Problème. Le triangle est là, mais la marque rouge
             # n'a pas été trouvée. C'est parce qu'on a atteint un streak
             # assez haut, et la marque rouge n'est plus affichée à l'écran.
             # Il faut faire une autre capture d'écran, quelques pixels
             # en dessous, et repérér les pixels les plus cyan sur la ligne.
-            self.fst_cur = fst.CRITICAL_ZONE_NOT_FOUND
-            return
+            self.fish_line_analyzer.analyze()
+            if self.fish_line_analyzer.x_critical_zone_1 is not None:
+                # TODO : line too long.
+                self.x_red_mark_defined = self.fish_line_analyzer.x_critical_zone_1
+            else:
+                self.fst_cur = fst.CRITICAL_ZONE_NOT_FOUND
+                return
 
         # Arrivé ici, on est sur que x_red_mark_defined et x_triangle sont
         # différents de None. Donc on peut faire des calculs avec.
