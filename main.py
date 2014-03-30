@@ -32,8 +32,7 @@ key_presser = KeyPresser("Firefox", 100, "a")
 
 while True:
 
-    fish_line_analyzer.analyze_screenshot()
-    fish_line_analyzer.refresh_current_state()
+    fish_line_analyzer.analyze()
     fst_cur = fish_line_analyzer.fst_cur
 
     if fst_prev != fst_cur:
@@ -46,8 +45,8 @@ while True:
             "->",
             str(fst.dictReverse[fst_cur])
         )))
-        fish_line_analyzer.log_current_info()
-        info("")
+        debug(fish_line_analyzer.get_current_info())
+        debug("")
         fst_prev = fst_cur
 
     time.sleep(DICT_DELAY_FROM_FISHING_STATE[fst_cur])
