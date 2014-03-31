@@ -55,8 +55,7 @@ class FishLineAnalyzer(object):
         self.cyan_dominant = False
 
         # Valeur initiale arbitraire à la con.
-        # TODO : De plus, le nommage est à l'arrache.
-        self.x_red_mark_defined = self.line_length + 50
+        self.x_red_mark_consistent = self.line_length + 50
         self.fst_cur = fst.HIGHLIGHTED
 
     def analyze(self):
@@ -69,7 +68,7 @@ class FishLineAnalyzer(object):
         current_info = " ".join((
             "cyan_dom:", str(self.cyan_dominant),
             "red_mark:", str(self.x_red_mark_1),
-            "x_red_mark_defined:", str(self.x_red_mark_defined),
+            "x_red_mark_consistent:", str(self.x_red_mark_consistent),
             "x_triangle:", str(self.x_triangle)
         ))
         if with_diff:
@@ -136,18 +135,18 @@ class FishLineAnalyzer(object):
 
         if not self.cyan_dominant:
             self.fst_cur = fst.HIGHLIGHTED
-            self.x_red_mark_defined = None
+            self.x_red_mark_consistent = None
             return
 
         if self.x_red_mark_1 is not None:
-            self.x_red_mark_defined = self.x_red_mark_1
+            self.x_red_mark_consistent = self.x_red_mark_1
 
         if self.x_triangle is None:
             # Le triangle n'est pas encore là.
             self.fst_cur = fst.WAIT_FISH
             return
 
-        if self.x_red_mark_defined is None:
+        if self.x_red_mark_consistent is None:
             # Problème. Le triangle est là, mais la marque rouge
             # n'a pas été trouvée. C'est parce qu'on a atteint un streak
             # assez haut, et la marque rouge n'est plus affichée à l'écran.
@@ -156,18 +155,18 @@ class FishLineAnalyzer(object):
             self.fish_line_analyzer.analyze()
             crit_zone_1 = self.fish_line_analyzer.x_critical_zone_1
             if crit_zone_1 is not None:
-                self.x_red_mark_defined = crit_zone_1
+                self.x_red_mark_consistent = crit_zone_1
             else:
                 self.fst_cur = fst.CRITICAL_ZONE_NOT_FOUND
                 return
 
-        # Arrivé ici, on est sur que x_red_mark_defined et x_triangle sont
+        # Arrivé ici, on est sur que x_red_mark_consistent et x_triangle sont
         # différents de None. Donc on peut faire des calculs avec.
-        if (self.x_red_mark_defined == self.x_triangle):
+        if (self.x_red_mark_consistent == self.x_triangle):
             # TODO : ça a l'air de mieux marcher quand j'enlève cette
             # 2ème moitié de la condition. Mais je suis sûr de rien.
             # C'est un peu approximatif.
-            # or self.x_red_mark_defined == self.x_triangle - 1):
+            # or self.x_red_mark_consistent == self.x_triangle - 1):
 
             # TODO : ça ne marche pas à 100%, et je ne comprends pas bien
             # pourquoi. Je crois que je m'en tamponne et que je vais pas
@@ -184,7 +183,7 @@ class FishLineAnalyzer(object):
         else:
 
             # TODO : valeur de seuil complètement à l'arrache.
-            if abs(self.x_triangle - self.x_red_mark_defined) < 20:
+            if abs(self.x_triangle - self.x_red_mark_consistent) < 20:
                 # Le triangle est proche. Faut rafraîchir souvent.
                 self.fst_cur = fst.FISH_NEAR
             else:
