@@ -26,7 +26,7 @@ FISHING_STATE = enum(
     # Soit il est pas là du tout, soit il est là, mais encore loin.
     "WAIT_FISH",
 
-    # Le triangle est très proche. Il faut faire des screen shot très fréquent,
+    # Le triangle est très proche. Il faut faire des screen shot fréquents,
     # Afin de détecter le bon moment où le triangle passe sur la marque rouge.
     "FISH_NEAR",
 
@@ -154,9 +154,9 @@ class FishLineAnalyzer(object):
             # Il faut faire une autre capture d'écran, quelques pixels
             # en dessous, et repérér les pixels les plus cyan sur la ligne.
             self.fish_line_analyzer.analyze()
-            if self.fish_line_analyzer.x_critical_zone_1 is not None:
-                # TODO : line too long.
-                self.x_red_mark_defined = self.fish_line_analyzer.x_critical_zone_1
+            crit_zone_1 = self.fish_line_analyzer.x_critical_zone_1
+            if crit_zone_1 is not None:
+                self.x_red_mark_defined = crit_zone_1
             else:
                 self.fst_cur = fst.CRITICAL_ZONE_NOT_FOUND
                 return
@@ -164,7 +164,11 @@ class FishLineAnalyzer(object):
         # Arrivé ici, on est sur que x_red_mark_defined et x_triangle sont
         # différents de None. Donc on peut faire des calculs avec.
         if (self.x_red_mark_defined == self.x_triangle):
-            # TODO TEST :or self.x_red_mark_defined == self.x_triangle - 1):
+            # TODO : ça a l'air de mieux marcher quand j'enlève cette
+            # 2ème moitié de la condition. Mais je suis sûr de rien.
+            # C'est un peu approximatif.
+            # or self.x_red_mark_defined == self.x_triangle - 1):
+
             # TODO : ça ne marche pas à 100%, et je ne comprends pas bien
             # pourquoi. Je crois que je m'en tamponne et que je vais pas
             # chercher. Ça devrait être suffisant pour atteindre

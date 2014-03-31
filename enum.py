@@ -38,5 +38,7 @@ def enum(enumName, *listValueNames):
     # ajout du dictionnaire inverse dans les attributs
     dictAttrib["dictReverse"] = dictReverse
     # création et renvoyage du type
+    # Attention, la fonction type accepte en premier paramètre une
+    # chaîne ASCII, et non pas une chaîne unicode. D'où le "str".
     mainType = type(str(enumName), (), dictAttrib)
     return mainType
