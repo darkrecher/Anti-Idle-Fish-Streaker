@@ -20,7 +20,29 @@ Le script effectue cette action indéfiniment, ce qui permet de faire des streak
 
 # Mode d'emploi #
 
+C'est du "chez moi ça marche". Donc aucune garantie de fonctionnement, et certainement aucune garantie de simplicité.
+
+Ne fonctionne que sous Windows.
+
+Ne fonctionne qu'avec Firefox (pour une raison stupide et très facilement corrigeable, mais c'est ainsi).
+
+ - Installer python 2.6.6 ou supérieur. Pas le python 3, qui n'est pas rétro-compatible avec les 2.x.
+ - Installer la librairie wxPython. Je ne sais plus exactement où ça se trouve. Mais c'est pas très compliqué. Personnellement, j'ai la version "2.8.12.1 (msw-unicode)"
+ - Installer la librairie pywin32. Pareil, je sais plus exactement où elle est. Personnellement, le nom du fichier d'installation que j'ai utilisé est "pywin32-218.win32-py2.6.exe"
+
 WIP
+
+ - Positionner l'écran de jeu. colonne 900. si y'a du cyan qui fait pas partie de la ligne de fishing, y'aura plantage silencieux.
+ - Bien vérifier que dans la fenêtre de Firefox, c'est le flash qui a le focus. Fermer les autres fenêtres Firefox. 
+ - Attendre qu'un triangle passe. Faut pas que ce soit en vert/rouge
+ - Ouvrir une console MS-DOS et lancer le script
+ - Si ça pète avec l'exception "impossible de trouver la ligne de fishing", repositionner éventuelleement, et relancer.
+ - Le focus va changer.
+ - Ne rien toucher !
+ - Ça va logger des trucs dans la console. 
+ - Si des fenêtres de milestone. les fermer.
+ - Surtout ne pas changer d'appli.
+ - Aller dans la fenêtre de console et appuyer sur Ctrl-C.
 
 # Doc de conception #
 
