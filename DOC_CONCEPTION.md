@@ -70,5 +70,11 @@
 
 # Trucs qui pourraient être améliorés #
 
-WIP
+ - Détecter quel navigateur internet est en cours d'exécution, et se focuser sur le premier trouvé, au lieu de prendre que Firefox.
+
+ - Si le focus n'est plus sur le navigateur, arrêter d'envoyer des appuis de touche, voire carrément arrêter le script. Ça évitera des bêtises.
+
+ - L'analyse des copies d'écran ne marche pas tout le temps, et les appuis de touche ne sont pas toujours envoyés au bon moment. Je ne sais pas trop pourquoi. Il faudrait peut-être revoir complètement le principe de fonctionnement. Au lieu d'attendre que le triangle soit dans la zone critique, on estime la vitesse du triangle, la distance restante à parcourir, ce qui permettrait de savoir, à l'avance, quand envoyer l'appui de touche.
+
+ - Les TODO dans le code.
 
