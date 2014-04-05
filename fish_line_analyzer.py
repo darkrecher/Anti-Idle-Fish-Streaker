@@ -18,8 +18,10 @@ FISHING_STATE = enum(
 
     # Le triangle est passé sur la marque rouge, on l'a détecté,
     # et on a envoyé le signal.
-    # Il faut attendre que la marque rouge se réactualise
-    # (elle doit se déplacer à un autre endroit)
+    # On ne renvoie pas d'autre signal juste après, sinon ça risque de faire
+    # n'importe quoi.
+    # Il faut attendre une surbrillance, un déplacement de la marque rouge et
+    # l'apparition d'un nouveau triangle.
     "SIGNAL_SENT",
 
     # La marque rouge s'est réactualisée. On attend le triangle.
@@ -27,15 +29,14 @@ FISHING_STATE = enum(
     "WAIT_FISH",
 
     # Le triangle est très proche. Il faut faire des screen shot fréquents,
-    # Afin de détecter le bon moment où le triangle passe sur la marque rouge.
+    # afin de détecter le bon moment où le triangle passe sur la marque rouge.
     "FISH_NEAR",
 
     # Le triangle est pil poil sur la marque rouge. Il faut envoyer le signal.
     "SEND_SIGNAL",
 
-    # La zone critique (celle dans laquelle le triangle doit se trouver,
-    # lorsqu'on appuie sur une touche), n'a pas été trouvée à l'écran.
-    # Alors qu'on aurait dû. (Un triangle est présent)
+    # La zone critique de perfect catch n'a pas été trouvée à l'écran,
+    # alors qu'on aurait dû, car un triangle est présent.
     "CRITICAL_ZONE_NOT_FOUND",
 )
 fst = FISHING_STATE
