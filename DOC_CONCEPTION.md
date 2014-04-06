@@ -2,27 +2,29 @@
 
 ## Trucs réutilisables pour d'autres scripts ##
 
- - `my_logging.py` : config à l'arrache de la librairie logging. En tout cas, ça écrit des accents sur la sortie standard sans se faire chier avec l'encodage.
+ - `my_logging.py` : config à l'arrache de la librairie logging. En tout cas, ça écrit des accents sur la sortie standard sans faire chier le monde avec l'encodage.
 
  - `colrtool.py` : conversion de couleurs RGB -> HSV.
 
- - `screen_shotter.py` : capture de l'écran (tout, ou une zone spécifique), enregistrement en bmp, récupération des pixels. Il manque juste un peu de doc.
+ - `screen_shotter.py` : capture de l'écran (tout, ou une zone spécifique), enregistrement en bmp, récupération des pixels. Il manque juste un peu de doc.
 
- - `fish_line_detector.find_first_color` : fonction parcourant une ligne ou une colonne d'une capture d'écran, pour trouver un pixel correspondant / ne correspondant pas à une couleur spécifique.
+ - `fish_line_detector.find_first_color` : fonction parcourant une ligne ou une colonne d'une capture d'écran, pour trouver le premier pixel correspondant / ne correspondant pas à une couleur spécifique.
 
 ## Déroulement global des actions ##
 
- - Fonction `fish_line_detector.detect` :
+ - Exécution de la fonction `fish_line_detector.detect` :
+
+ 	- Screenshot de tout l'écran.
 
  	- Parcours de la colonne de pixel x=900. Détection du premier pixel turquoise corresondant exactement à la couleur de la zone de pêche.
 
-	- Si rien trouvé, on quitte la fonction. Et le script se termine avec l'exception "impossible de trouver la ligne de fishing à l'écran".
+	- Si rien trouvé, le script se termine avec l'exception "impossible de trouver la ligne de fishing à l'écran".
 
  	- Sinon, parcours horizontal de la ligne comportant le pixel turquoise. afin de déterminer où commence et où finit la "fish_line". Il s'agit de la ligne en haut du trapèze, sur laquelle se trouve la pointe supérieur du triangle qui passe.
 
  - les variables `y_line, x1_line, x2_line` permettent de repérer la fish\_line sur l'écran.
 
- - Instanciation d'une classe `FishLineAnalyzer` (effectue des copies d'écran de la fish\_line et les analyse), et d'une classe `FishSubLineAnalyzer` (effectue des copies d'écran d'une ligne située 5 pixels en dessous de la fish\_line).
+ - Instanciation d'une classe `FishLineAnalyzer` (effectue des copies d'écran de la fish\_line et les analyse), et d'une classe `FishSubLineAnalyzer` (effectue des copies d'écran d'une ligne située 5 pixels en dessous de la fish\_line).
 
  - L'instance de `FishSubLineAnalyzer` est transmise à `FishLineAnalyzer`.
 
@@ -34,7 +36,7 @@
 
  - Exécution de la fonction `fish_line_analyzer.analyze` :
 
-	 - Exécution de la fonction `_make_screenshot_main_line` : screenshot de la fish\_line (une zone de 1 pixel de hauteur).
+	 - Exécution de la fonction `_make_screenshot_main_line` : screenshot d'une zone spécifique de l'écran : la fish\_line (ligne de 1 seul pixel).
 
 	 - Exécution des fonctions `_reset_screenshot_values` et `_process_screenshot`, pour mettre à jour les variables internes suivantes :
 
@@ -42,7 +44,7 @@
 
          - `x_triangle` : position de la pointe du triangle sur la fish\_line. Peut être None lorsqu'aucun triangle n'est présent. À priori, on parvient toujours à le détecter, grâce à des approximations sur les couleurs.
 
-         - `cyan_dominant` : Booléen. Vaut True lorsque plus de 50% des pixels de la fish\_line sont de la couleur turquoise spécifique. Cette vérification permet de s'assurer que la zone de pêche n'est pas actuellement en surbrillance verte ou rouge.
+         - `cyan_dominant` : Booléen. Vaut True lorsque plus de 50% des pixels de la fish\_line sont de la couleur turquoise spécifique. Cette vérification permet de s'assurer que la zone de pêche n'est pas actuellement en surbrillance verte ou rouge.
 
      - Exécution de la fonction `_refresh_current_state` :
 
@@ -50,7 +52,7 @@
 
          - Le jeu de Fishing possède une difficulté supplémentaire : lorsqu'on atteint un niveau de streak assez haut, la marque rouge n'est plus présente à l'écran. Dans ce cas, `x_red_mark_1` et `x_red_mark_consistent` restent None. On exécute alors la fonction `analyze` de la classe `FishSubLineAnalyzer`. Elle effectue les actions suivantes :
 
-            - Capture d'écran de la "sub\_fish\_line" (ligne de pixel de même largeur que la fish\_line, mais située 5 pixels en dessous).
+            - Capture d'écran de la "sub\_fish\_line" (ligne de pixel de même largeur que la fish\_line, mais située 5 pixels en dessous).
 
             - Analyse de cette ligne pour trouver les deux pixels les plus turquoise possibles. Mise à jour des variables internes `x_critical_zone_1` et `x_critical_zone_2`. `FishLineAnalyzer.x_red_mark_consistent` prendra la valeur de `x_critical_zone_1`.
 
@@ -77,4 +79,3 @@
  - L'analyse des copies d'écran ne marche pas tout le temps, et les appuis de touche ne sont pas toujours envoyés au bon moment. Je ne sais pas trop pourquoi. Il faudrait peut-être revoir complètement le principe de fonctionnement. Au lieu d'attendre que le triangle soit dans la zone critique, on pourrait estimer sa vitesse et la distance restante à parcourir, ce qui permettrait de savoir, à l'avance, quand envoyer l'appui de touche.
 
  - Les TODO dans le code.
-
