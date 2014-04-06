@@ -32,7 +32,7 @@ Ne fonctionne qu'avec Firefox (pour une raison stupide et très facilement corri
 
  - Installer la librairie pywin32. Le nom du fichier d'installation que j'ai utilisé est "pywin32-218.win32-py2.6.exe"
 
- - Télécharger tout ce repository, et le placer tel quel sur le disque dur, n'importe où.
+ - Télécharger tout ce repository, sur un disque local, n'importe où.
 
  - Démarrer le jeu dans Firefox. Placer la fenêtre de façon à ce que la "zone de pêche" (le trapèze aux bords turquoise) soit traversée par la colonne de pixels située à x=900. (x=0 : colonne tout à gauche). La position exacte de cette colonne dépend de la résolution de votre écran. Débrouillez-vous avec ça.  
 
@@ -52,19 +52,19 @@ Ne fonctionne qu'avec Firefox (pour une raison stupide et très facilement corri
 
  - Si tout va bien, la fenêtre de Firefox deviendra automatiquement la fenêtre active.
 
- - Surtout, ne rien toucher ! Si c'est une autre fenêtre qui devient active pendant que le script tourne, les appuis de touche risquent d'être envoyés ailleurs. 
+ - Surtout, ne plus rien toucher ! Si c'est une autre fenêtre qui devient active pendant que le script tourne, les appuis de touche risquent d'être envoyés ailleurs. 
 
  - Des infos diverses seront loggées dans la console, au fur et à mesure des captures d'écran, de la détection des triangles, etc.
 
  - Normalement, les perfect catch devraient s'effectuer tout seul, les uns après les autres.
 
- - Si le jeu affiche des messages de milestone (les récompenses pour avoir atteint un certain score journalier), il est possible de les refermer sans interrompre le script. Mais il est conseillé de ne faire aucune autre action.
+ - Si le jeu affiche des messages de milestone (récompenses pour avoir atteint certains scores journaliers), il est possible de les refermer sans interrompre le script. Mais il est conseillé de ne faire aucune autre action.
 
  - Pour arrêter le script, cliquer sur la console MS-DOS et appuyer sur Ctrl-C. (Assez-vite, sinon la console va s'envoyer des appuis de touche sur elle-même, et c'est un peu bizarre).
 
 # Doc de conception #
 
-WIP. Mais ce sera assez court.
+https://github.com/darkrecher/Anti-Idle-Fish-Streaker/blob/master/DOC_CONCEPTION.md
 
 # Crédits #
 
