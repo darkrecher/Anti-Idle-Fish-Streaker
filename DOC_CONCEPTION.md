@@ -36,7 +36,7 @@
 
  - Exécution de la fonction `fish_line_analyzer.analyze` :
 
-	 - Exécution de la fonction `_make_screenshot_main_line` : screenshot d'une zone spécifique de l'écran : la fish\_line (ligne de 1 seul pixel).
+	 - Exécution de la fonction `_make_screenshot_main_line` : screenshot d'une zone de l'écran : la fish\_line.
 
 	 - Exécution des fonctions `_reset_screenshot_values` et `_process_screenshot`, pour mettre à jour les variables internes suivantes :
 
@@ -52,9 +52,9 @@
 
          - Le jeu de Fishing possède une difficulté supplémentaire : lorsqu'on atteint un niveau de streak assez haut, la marque rouge n'est plus présente à l'écran. Dans ce cas, `x_red_mark_1` et `x_red_mark_consistent` restent None. On exécute alors la fonction `analyze` de la classe `FishSubLineAnalyzer`. Elle effectue les actions suivantes :
 
-            - Capture d'écran de la "sub\_fish\_line" (ligne de pixel de même largeur que la fish\_line, mais située 5 pixels en dessous).
+            - Capture d'écran de la "sub\_fish\_line" (ligne de même largeur que la fish\_line, située 5 pixels en dessous).
 
-            - Analyse de cette ligne pour trouver les deux pixels les plus turquoise possibles. Mise à jour des variables internes `x_critical_zone_1` et `x_critical_zone_2`. `FishLineAnalyzer.x_red_mark_consistent` prendra la valeur de `x_critical_zone_1`.
+            - Analyse de cette ligne pour trouver les deux pixels les plus turquoise possible. Mise à jour des variables internes `x_critical_zone_1` et `x_critical_zone_2`. `FishLineAnalyzer.x_red_mark_consistent` prendra la valeur de `x_critical_zone_1`.
 
             - Cette fonction d'analyse de la sub_line n'est effectuée que si un triangle a été repéré. Car tant qu'il n'y a pas de triangle, la zone critique de perfect catch est peut-être en train de se déplacer, pour passer de l'ancienne position à la nouvelle position.
 
@@ -64,15 +64,15 @@
 
  - Si `fst_cur` a la valeur spécifique `fst.SEND_SIGNAL`, la classe `KeyPresser` envoie un appui de touche à l'application Firefox. Le jeu accepte n'importe quelle touche. Donc arbitrairement, on simule un appui sur "a".
 
- - Si `fst_cur` a changé de valeur par rapport à l'itération de boucle précédente : log de l'ancienne et de la nouvelle valeur dans la console.
+ - Si `fst_cur` a changé de valeur par rapport à l'itération de boucle précédente : log de ce changement dans la console.
 
- - Pour ne pas trop pourrir les performances, on attend un certain nombre de millisecondes entre deux itérations de boucle, selon la valeur de `fst_cur`. Par exemple, lorsque la fish\_line est en surbrillance, on n'est pas obligé de contrôler très fréquemment ce qu'il se passe à l'écran, car un nouveau triangle n'apparaîtra pas immédiatement. Tandis que lorsque le triangle est proche de la zone critique, il faut contrôler beaucoup plus fréquemment. Les correspondances "état -> temps d'attente" sont définis dans le dictionnaire `main.DICT_DELAY_FROM_FISHING_STATE`.
+ - Pour ne pas trop pourrir les performances, on attend un certain nombre de millisecondes entre deux itérations de boucle, selon la valeur de `fst_cur`. Par exemple, lorsque la fish\_line est en surbrillance, on sait qu'un nouveau triangle n'apparaîtra pas immédiatement, donc on peut contrôler ce qu'il se passe à l'écran de manière peu fréquente. Tandis que lorsque le triangle est proche de la zone critique, il faut contrôler beaucoup plus fréquemment. Les correspondances "état -> temps d'attente" sont définis dans le dictionnaire `main.DICT_DELAY_FROM_FISHING_STATE`.
 
- - Retour au début de la boucle inifini, et ainsi de suite, jusqu'à l'infini, donc.
+ - Retour au début de la boucle infinie, et ainsi de suite, jusqu'à l'infini, donc.
 
 # Trucs qui pourraient être améliorés #
 
- - Détecter quel navigateur internet est en cours d'exécution, et se focuser sur le premier trouvé, au lieu de prendre que Firefox.
+ - Détecter quel navigateur internet est en cours d'exécution, et se focuser sur le premier trouvé, au lieu de ne prendre que Firefox.
 
  - Si le focus n'est plus sur le navigateur, arrêter d'envoyer des appuis de touche, voire carrément arrêter le script. Ça évitera des bêtises.
 
