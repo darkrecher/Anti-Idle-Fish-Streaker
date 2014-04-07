@@ -20,7 +20,7 @@
 
 	- Si rien trouvé, le script se termine avec l'exception "impossible de trouver la ligne de fishing à l'écran".
 
- 	- Sinon, parcours horizontal de la ligne comportant le pixel turquoise. afin de déterminer où commence et où finit la "fish_line". Il s'agit de la ligne en haut du trapèze, sur laquelle se trouve la pointe supérieur du triangle qui passe.
+ 	- Sinon, parcours horizontal de la ligne comportant le pixel turquoise, afin de déterminer où commence et où finit la "fish_line". Il s'agit de la ligne en haut du trapèze, sur laquelle se trouve la pointe supérieur du triangle qui passe.
 
  - les variables `y_line, x1_line, x2_line` permettent de repérer la fish\_line sur l'écran.
 
@@ -30,7 +30,7 @@
 
  - Instanciation d'une classe `KeyPresser` : classe utilisant la librairie pywin32, capable d'envoyer des appuis de touches.
 
- - La classe `KeyPresser` met le focus sur l'application "Firefox". (C'est pour ça que le script ne marche qu'avec Firefox, il suffirait de changer le nom de l'application dans `KeyPresser`).
+ - La classe `KeyPresser` met le focus sur l'application Firefox. (C'est pour ça que le script ne marche qu'avec ce navigateur, il suffirait de changer le nom de l'application dans `KeyPresser`).
 
  - Démarrage d'une boucle infinie, qui va exécuter toutes les étapes listées ci-dessous.
 
@@ -40,9 +40,9 @@
 
 	 - Exécution des fonctions `_reset_screenshot_values` et `_process_screenshot`, pour mettre à jour les variables internes suivantes :
 
-		 - `x_red_mark_1`, `x_red_mark_2` : positions de la marque rouge représentant la "zone critique" (zone dans laquelle doit se trouver le triangle, au moment où on appuie sur une touche, pour réussir un perfect catch). La marque rouge fait deux pixels de large, c'est pour ça qu'il y a deux variables. Elles peuvent être None lorsque la marque rouge est non présente, ou non détectée. La non-détection peut survenir lorsque le triangle est proche de la marque, dans ce cas les couleurs des pixels se mélangent.
+		 - `x_red_mark_1`, `x_red_mark_2` : positions de la marque rouge représentant la "zone critique" (zone dans laquelle doit se trouver le triangle, au moment où on appuie sur une touche, pour réussir un perfect catch). La marque rouge fait deux pixels de large, c'est pour ça qu'il y a deux variables. Elles peuvent être None lorsque la marque rouge est non présente, ou non détectée. La non-détection peut survenir lorsque le triangle est proche de la marque, car dans ce cas les couleurs des pixels se mélangent.
 
-         - `x_triangle` : position de la pointe du triangle sur la fish\_line. Peut être None lorsqu'aucun triangle n'est présent. À priori, on parvient toujours à le détecter, grâce à des approximations sur les couleurs.
+         - `x_triangle` : position de la pointe du triangle sur la fish\_line. Peut être None lorsqu'aucun triangle n'est présent. À priori, on parvient toujours à détecter sa présence, grâce à des approximations sur les couleurs.
 
          - `cyan_dominant` : Booléen. Vaut True lorsque plus de 50% des pixels de la fish\_line sont de la couleur turquoise spécifique. Cette vérification permet de s'assurer que la zone de pêche n'est pas actuellement en surbrillance verte ou rouge.
 
@@ -77,5 +77,7 @@
  - Si le focus n'est plus sur le navigateur, arrêter d'envoyer des appuis de touche, voire carrément arrêter le script. Ça évitera des bêtises.
 
  - L'analyse des copies d'écran ne marche pas tout le temps, et les appuis de touche ne sont pas toujours envoyés au bon moment. Je ne sais pas trop pourquoi. Il faudrait peut-être revoir complètement le principe de fonctionnement. Au lieu d'attendre que le triangle soit dans la zone critique, on pourrait estimer sa vitesse et la distance restante à parcourir, ce qui permettrait de savoir, à l'avance, quand envoyer l'appui de touche.
+
+ - Ça ne sert à rien de stocker la position de la zone critique dans deux variables différentes, (une pour chaque pixel), puisque les deux pixels de la zone critique sont toujours adjacent. Il faudrait enlever `x_red_mark_2` et `x_critical_zone_2`, et simplement vérifier que les deux pixels sont toujours adjacents.
 
  - Les TODO dans le code.
